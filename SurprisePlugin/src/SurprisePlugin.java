@@ -6,14 +6,14 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class SurprisePlugin extends JavaPlugin {
-	public void onEnable() {
-	}
 
-	public void onDisable() {
+	@Override
+	public void onEnable() {
 	}
 
 	public boolean onCommand(CommandSender sender, Command befehl, String befehlsname, String[] args) {
@@ -34,7 +34,7 @@ public class SurprisePlugin extends JavaPlugin {
 			position.setX(position.getX() + 2);
 
 		Material m = Material.PUMPKIN;
-		int randomNum = ThreadLocalRandom.current().nextInt(0, 10 + 1);
+		int randomNum = ThreadLocalRandom.current().nextInt(0, 12 + 1);
 
 		switch (randomNum) {
 		case 0:
@@ -70,29 +70,39 @@ public class SurprisePlugin extends JavaPlugin {
 		case 10:
 			m = Material.ATTACHED_PUMPKIN_STEM;
 			break;
+		case 11:
+			m = Material.GREEN_WOOL;
+			break;
+		case 12:
+			position.setY(position.getY() + 10);
+			welt.spawnEntity(position, EntityType.CREEPER);
+			break;
 		}
 
-		welt.getBlockAt(position).setType(m);
-		if (m == Material.TNT) {
-			double x_center = position.getX();
-			double z_center = position.getZ();
-			double y_center = position.getY();
-
-			for (int x = -1; x <= 1; x++) {
-				for (int z = -1; z <= 1; z++) {
-					for (int y = -1; y <= 1; y++) {
-						position.setX(x_center + x);
-						position.setZ(z_center + z);
-						position.setY(y_center + y);
-						welt.getBlockAt(position).setType(m);
+		if(randomNum<12)
+		{
+			welt.getBlockAt(position).setType(m);
+			if (m == Material.TNT) {
+				double x_center = position.getX();
+				double z_center = position.getZ();
+				double y_center = position.getY();
+	
+				for (int x = -1; x <= 1; x++) {
+					for (int z = -1; z <= 1; z++) {
+						for (int y = -1; y <= 1; y++) {
+							position.setX(x_center + x);
+							position.setZ(z_center + z);
+							position.setY(y_center + y);
+							welt.getBlockAt(position).setType(m);
+						}
 					}
 				}
+				position.setX(x_center);
+				position.setZ(z_center);
+				position.setY(position.getY() - 1);
+				m = Material.REDSTONE_BLOCK;
+				welt.getBlockAt(position).setType(m);
 			}
-			position.setX(x_center);
-			position.setZ(z_center);
-			position.setY(position.getY() - 1);
-			m = Material.REDSTONE_BLOCK;
-			welt.getBlockAt(position).setType(m);
 		}
 
 		return true;
