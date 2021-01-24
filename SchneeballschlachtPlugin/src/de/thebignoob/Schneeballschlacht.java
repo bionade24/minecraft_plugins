@@ -7,11 +7,9 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Schneeballschlacht extends JavaPlugin {
-	HashMap<UUID, Integer> punktestand;
 	
 	public void onEnable( ) {
-		punktestand = new HashMap<UUID, Integer>();
-		
+
 		PluginManager pluginManager = this.getServer().getPluginManager();
 		
 		JoinListener joinListener = new JoinListener();
@@ -23,7 +21,7 @@ public class Schneeballschlacht extends JavaPlugin {
 		WurfListener wurfListener = new WurfListener();
 		pluginManager.registerEvents(wurfListener, this);
 		
-		TrefferListener trefferListener = new TrefferListener(punktestand);
+		TrefferListener trefferListener = new TrefferListener();
 		pluginManager.registerEvents(trefferListener, this);
 	}
 	

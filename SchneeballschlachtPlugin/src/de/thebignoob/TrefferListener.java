@@ -13,12 +13,6 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.projectiles.ProjectileSource;
 
 public class TrefferListener implements Listener{
-	HashMap<UUID, Integer> punktestand;
-
-	public TrefferListener(HashMap<UUID, Integer> punktestand)
-	{
-		this.punktestand = punktestand;
-	}
 
 	@EventHandler
 	public void onEvent(EntityDamageByEntityEvent event){
@@ -37,27 +31,6 @@ public class TrefferListener implements Listener{
 					double leben = a2.getHealth()-4;
 					if(leben<0) leben = 0;
 					a2.setHealth(leben);
-					
-					if(punktestand.containsKey(a1.getUniqueId()))
-					{
-						punktestand.put(a1.getUniqueId(), punktestand.get(a1.getUniqueId()) + 1);
-					}
-					else
-					{
-						punktestand.put(a1.getUniqueId(), 1);
-					}
-	
-					if(punktestand.containsKey(a2.getUniqueId()))
-					{
-						punktestand.put(a2.getUniqueId(), punktestand.get(a2.getUniqueId()) - 1);
-					}
-					else
-					{
-						punktestand.put(a2.getUniqueId(), -1);
-					}
-	
-					a1.sendMessage("Du hast jetzt " + punktestand.get(a1.getUniqueId()) + " Punkte.");
-					a2.sendMessage("Du hast jetzt " + punktestand.get(a2.getUniqueId()) + " Punkte.");
 				}
 			}
 		}
