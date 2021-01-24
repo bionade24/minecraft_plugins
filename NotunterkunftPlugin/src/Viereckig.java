@@ -1,6 +1,6 @@
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-
+import org.bukkit.Location;
 
 abstract class Viereckig {
 	protected int hoehe;
@@ -13,6 +13,6 @@ abstract class Viereckig {
 		this.material = material;
 	}
 	
-	abstract void bauen(Player spieler);
+	abstract void bauen(Player spieler, Location position);
 	
 }

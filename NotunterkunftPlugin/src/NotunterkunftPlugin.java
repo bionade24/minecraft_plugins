@@ -16,37 +16,38 @@ public class NotunterkunftPlugin extends JavaPlugin {
 	}
 
 	public boolean onCommand(CommandSender sender, Command befehl, String befehlsname, String[] args) {
-		Player spieler = (Player) sender;
-		Location position = spieler.getLocation();
-		World welt = spieler.getWorld();
-
-		position.setX(position.getX() + 2);
-		double yStart = position.getY();
-		double xStart = position.getX();
-		double zStart = position.getZ();
-		
-		int xmax = Integer.valueOf(args[0]);
-		int ymax = Integer.valueOf(args[1]);
-		int zmax = Integer.valueOf(args[2]);
-		
-		if(xmax>50) xmax=50;
-		if(ymax>50) ymax=50;
-		if(zmax>50) zmax=50;
-		
-		for(int y=0; y<ymax; y++)
+		if(sender instanceof Player)
 		{
-			position.setY(yStart+y);
-			for(int x=0; x<xmax; x++)
-			{
-				position.setX(xStart+x);
-				for(int z=0; z<zmax; z++)
-				{
-					position.setZ(zStart+z);
-					welt.getBlockAt(position).setType(Material.PUMPKIN);
-				}
-			}
+			Player spieler = (Player) sender;
+			World welt = spieler.getWorld();
+	
+			Location pos = spieler.getLocation();
+			
+			int hoehe = 4;
+			int breite = 10;
+			int tiefe = 10;
+			
+			Location aussenQuaderPosition = new Location(welt, pos.getX()+breite/2, pos.getY(), pos.getZ());
+			Location innenQuaderPosition  = new Location(welt, pos.getX()+breite/2+1, pos.getY(), pos.getZ()+1);
+			Location bodenQuaderPosition  = new Location(welt, pos.getX()+breite/2+1, pos.getY(), pos.getZ()+1);
+			Location lampePosition = new Location(welt, pos.getX()+breite, pos.getY()+hoehe-1, pos.getZ()+tiefe/2);
+			Location tuerPosition = new Location(welt, pos.getX()+breite, pos.getY()+1, pos.getZ());
+			Quader aussen = new Quader(hoehe, breite, tiefe, Material.BRICKS);
+			Quader innen = new Quader(hoehe-1, breite-2, tiefe-2, Material.AIR);
+			Quader boden = new Quader(1, breite-2, tiefe-2, Material.JUNGLE_WOOD);
+			Quader lampe = new Quader(1, 2, 2, Material.GLOWSTONE);
+			Quader tuer = new Quader(2, 1, 1, Material.AIR);
+			
+			aussen.bauen(spieler, aussenQuaderPosition);
+			innen.bauen(spieler, innenQuaderPosition);
+			boden.bauen(spieler, bodenQuaderPosition);
+			lampe.bauen(spieler, lampePosition);
+			tuer.bauen(spieler, tuerPosition);
 		}
-
+		else
+		{
+			this.getLogger().info("Dieser Befehl kann nur von Spielern ausgefuehrt werden.");
+		}
 		return true;
 	}
 }

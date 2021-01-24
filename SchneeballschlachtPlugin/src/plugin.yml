@@ -1,0 +1,4 @@
+name: Schneeballschlacht-Plugin
+main: de.thebignoob.Schneeballschlacht
+api-version: 1.16
+version: 1.0

@@ -7,7 +7,10 @@ class Quader extends Viereckig {
 
 	private int tiefe;
 	
-	
+	public Quader(int hoehe, int breite, int tiefe, Material material) {
+		super(hoehe, breite, material);
+		this.tiefe = tiefe;
+	}
 	
 	public void bauen(Player spieler, Location position) {
 		World welt = spieler.getWorld();
