@@ -12,8 +12,8 @@ public class Schneeballschlacht extends JavaPlugin {
 
 		PluginManager pluginManager = this.getServer().getPluginManager();
 		
-		JoinListener joinListener = new JoinListener();
-		pluginManager.registerEvents(joinListener, this);
+		SnowballfightListener sbfListener = new SnowballfightListener();
+		pluginManager.registerEvents(sbfListener, this);
 		
 		RespawnListener respawnListener = new RespawnListener();
 		pluginManager.registerEvents(respawnListener, this);
